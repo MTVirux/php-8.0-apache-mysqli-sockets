@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set timestamp variable
-      run: echo "::set-env name=TIMESTAMP::$(date +%s)"
+      run: echo "{TIMESTAMP}=$(date +%s)" >> $GITHUB_ENV
     - name: Authenticate with Docker Hub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username mtvirux --password-stdin
     
