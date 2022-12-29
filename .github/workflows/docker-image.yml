@@ -23,16 +23,16 @@ jobs:
         docker build . --file Dockerfile_ssl    -t mtvirux/php-8.0-apache-mysqli-sockets:ssl-${{ env.TIMESTAMP }}
 
     - name: Build the Docker image (ssl)
-    - run: |
+      run: |
         docker build . --file Dockerfile_no-ssl -t mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-latest
         docker build . --file Dockerfile_no-ssl -t mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-${{ env.TIMESTAMP }}
         
     - name: Push ssl tag Docker Image
-    - run: |
+      run: |
         docker push mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-latest
         docker push mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-${{ env.TIMESTAMP }}
         
     - name: Push no-ssl tag Docker Image
-    - run: |
+      run: |
         docker push mtvirux/php-8.0-apache-mysqli-sockets:latest
         docker push mtvirux/php-8.0-apache-mysqli-sockets:ssl-${{ env.TIMESTAMP }}
