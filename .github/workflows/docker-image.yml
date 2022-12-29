@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Authenticate with Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username mtvirux --password-stdin
+    - name: Build the Docker image
+      run: |
+        TIMESTAMP=$(date +%s)
+        docker build . --file Dockerfile_ssl    -t mtvirux/php-8.0-apache-mysqli-sockets:latest_ssl
+        docker build . --file Dockerfile_ssl    -t mtvirux/php-8.0-apache-mysqli-sockets:ssl-${TIMESTAMP}
+        docker build . --file Dockerfile_no-ssl -t mtvirux/php-8.0-apache-mysqli-sockets:latest_no-ssl
+        docker build . --file Dockerfile_no-ssl -t mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-${TIMESTAMP}
+        docker push mtvirux/php-8.0-apache-mysqli-sockets:latest_ssl
+        docker push mtvirux/php-8.0-apache-mysqli-sockets:ssl-${TIMESTAMP}
+        docker push mtvirux/php-8.0-apache-mysqli-sockets:latest_no-ssl
+        docker push mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-${TIMESTAMP}
