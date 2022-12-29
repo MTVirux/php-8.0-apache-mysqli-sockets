@@ -33,10 +33,13 @@ jobs:
         
     - name: Push ssl tag Docker Image
       run: |
-        docker push mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-latest
+        docker push mtvirux/php-8.0-apache-mysqli-sockets:ssl-${{ env.TIMESTAMP }}
+        
+    - name: Push no-ssl tag docker image
+      run: |
         docker push mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-${{ env.TIMESTAMP }}
         
-    - name: Push no-ssl tag Docker Image
+    - name: Push latest tags
       run: |
+        docker push mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-latest
         docker push mtvirux/php-8.0-apache-mysqli-sockets:latest
-        docker push mtvirux/php-8.0-apache-mysqli-sockets:ssl-${{ env.TIMESTAMP }}
