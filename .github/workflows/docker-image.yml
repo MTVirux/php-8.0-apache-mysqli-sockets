@@ -19,7 +19,9 @@ jobs:
           cat $GITHUB_ENV
       
     - name: Authenticate with Docker Hub
-      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username mtvirux --password-stdin
+      run: |
+        echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username mtvirux --password-stdin
+        echo "${{ secrets.FFXIVMT_ACTION_PACKAGE_MANAGEMENT}}" | docker login ghcr.io --username mtvirux --password-stdin
     
     - name: Build the Docker image (ssl)
       run: |
