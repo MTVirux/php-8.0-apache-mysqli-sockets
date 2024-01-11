@@ -25,21 +25,38 @@ jobs:
       run: |
         docker build . --file Dockerfile_ssl    -t mtvirux/php-8.0-apache-mysqli-sockets:latest
         docker build . --file Dockerfile_ssl    -t mtvirux/php-8.0-apache-mysqli-sockets:ssl-${{ env.TIMESTAMP }}
+        docker build . --file Dockerfile_ssl    -t ghcr.io/mtvirux/php-8.0-apache-mysqli-sockets:latest
+        docker build . --file Dockerfile_ssl    -t ghcr.io/mtvirux/php-8.0-apache-mysqli-sockets:ssl-${{ env.TIMESTAMP }}
 
     - name: Build the Docker image (ssl)
       run: |
         docker build . --file Dockerfile_no-ssl -t mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-latest
         docker build . --file Dockerfile_no-ssl -t mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-${{ env.TIMESTAMP }}
+        docker build . --file Dockerfile_no-ssl -t ghcr.io/mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-latest
+        docker build . --file Dockerfile_no-ssl -t ghcr.io/mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-${{ env.TIMESTAMP }}
         
     - name: Push ssl tag Docker Image
       run: |
         docker push mtvirux/php-8.0-apache-mysqli-sockets:ssl-${{ env.TIMESTAMP }}
+
+    - name: Push no-ssl tag Docker Image to GHCR
+      run: |
+        docker push ghcr.io/mtvirux/php-8.0-apache-mysqli-sockets:ssl-${{ env.TIMESTAMP }}
         
-    - name: Push no-ssl tag docker image
+    - name: Push no-ssl tag Docker Image
       run: |
         docker push mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-${{ env.TIMESTAMP }}
+
+    - name: Push no-ssl tag Docker Image to GHCR
+      run: |
+        docker push ghcr.io/mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-${{ env.TIMESTAMP }}
         
     - name: Push latest tags
       run: |
         docker push mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-latest
         docker push mtvirux/php-8.0-apache-mysqli-sockets:latest
+
+    - name: Push latest tags to GHCR
+      run: |
+        docker push ghcr.io/mtvirux/php-8.0-apache-mysqli-sockets:no-ssl-latest
+        docker push ghcr.io/mtvirux/php-8.0-apache-mysqli-sockets:latest
